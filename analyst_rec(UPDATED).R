@@ -270,7 +270,7 @@ stock_recs <- function(stock_sign) {
       financhill(stock_sign)
       #zacks_stock_price(stock_sign) # blocked by wifi
       #finviz_stock_price(stock_sign)
-      stock_invest(stock_sign)
+      #stock_invest(stock_sign)
       #markets_insider(stock_sign) #find way to show analyst recommendation range
       market_beat(stock_sign)
       bar_chart(stock_sign)
@@ -285,7 +285,7 @@ stock_recs <- function(stock_sign) {
    
 }
 
-stock_recs("usm")
+stock_recs("ntst")
 
 # trefis website for price forecasts
 # terminology explanation
