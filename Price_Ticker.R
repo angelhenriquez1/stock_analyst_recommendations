@@ -149,3 +149,59 @@ current_price <- function(stock_sign){
    ifelse(profit_diff_num > 25, print(profit_diff_num1), "")
    
 }
+
+
+
+stock_sign = "GOOG"
+
+
+
+
+
+
+
+
+
+stock_sign = "GOOG"
+
+stock_prices <- function(stock_sign){
+
+yahoo_url <- paste0("https://finance.yahoo.com/quote/", stock_sign, "?p=", stock_sign)
+
+# current price
+current <- read_html(yahoo_url)
+
+current <- current %>%
+   html_nodes("span") %>%
+   html_text() %>%
+   as.data.frame()
+
+current <- current[!apply(is.na(current) | current == "", 1, all),]
+current <- as.data.frame(current)
+current <- current[grep("[[:digit:]]", current$current), ]
+current <- as.data.frame(current)
+current <- current[!grepl("W", current$current),]
+current <- as.data.frame(current)
+current1 <- current[12,1]
+current1 <- gsub(",","",current1)
+current1 <- suppressWarnings(as.numeric(as.character(current1)))
+current2 <- current[16,1]
+current2 <- gsub(",","",current2)
+current2 <- suppressWarnings(as.numeric(as.character(current2)))
+current <- ifelse(is.na(current1) == TRUE, current2, current1)
+current <- as.data.frame(current)
+current <- as.numeric(as.character(current$current))
+
+stock_result <- paste0(stock_sign, " is worth ", current)
+
+ifelse(current < 10, print(stock_result), "")
+
+}
+
+for (i in  stock_names){
+   
+   tryCatch(
+   stock_prices(i), 
+   error = function(e){})
+   
+}
