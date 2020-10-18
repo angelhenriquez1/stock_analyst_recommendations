@@ -237,7 +237,7 @@ only_text("hii", 10, 25)
 
 #example loop of gains####
 
-for ( i in data ){
+for ( i in test_data ){
    
    tryCatch(
       only_text(i, 10, 10), error = function(e){})
