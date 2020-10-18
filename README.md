@@ -6,8 +6,8 @@ Stock profitability is based on the current price relative to previous maximum a
 
 The current stock price is retrieved from Yahoo Finance; monthly and quarterly highs and lows are retrieved from Barchart.com.
 
-I began this project for coding experience. Take any and all results with a grain of salt.
+This code is not to be sold and if replicated, changed, and/or used, please reference me by name and github account, Angel Henriquez and @angelhenriquez1, respectively.
 
-Reach out to me on LinkedIn (https://www.linkedin.com/in/angelhenriquez1/) with any suggestions.
+If you have any recommendations on how to make my code more efficient or grow this idea, feel free to contact me on LinkedIn (https://www.linkedin.com/in/angelhenriquez1/).
 
-Enjoy!
+Thanks and enjoy!
