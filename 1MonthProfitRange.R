@@ -1269,12 +1269,12 @@ month_profit_range <- function(stock_sign){
    # profit difference number
    profit_diff_num = pot_prof - pot_loss
    profit_diff_num = round(profit_diff_num, digits=2)
-   profit_diff_num1 = paste0(stock_sign," has $", profit_diff_num, " profit potential.")
+   profit_diff_num1 = paste0(stock_sign,": $", profit_diff_num)
    
    # profit percent difference
    profit_diff_perc = pot_prof_perc - pot_loss_perc
    profit_diff_perc = round(profit_diff_perc, digits=2)
-   profit_diff_perc1 = paste0(stock_sign, " has ", profit_diff_perc, "% profit potential.")
+   profit_diff_perc1 = paste0(stock_sign, ": ", profit_diff_perc)
    
    # potential profit
    #Greater than 75% potential profit
