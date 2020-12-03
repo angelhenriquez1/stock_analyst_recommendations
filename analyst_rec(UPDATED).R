@@ -3,27 +3,86 @@
 library(tidyverse)
 library(htmltab)
 library(rvest)
+library(xml2)
 
-stock_recs <- function(stock_sign) {
+#Stock List####
+#nyse <- read.csv("~/Stock Average Price Projection/nyse.csv", stringsAsFactors=FALSE)
+#amex <- read_csv("Stock Average Price Projection/amex.csv", skip = 1)
+#nasdaq <- read.csv("~/Stock Average Price Projection/nasdaq.csv", stringsAsFactors=FALSE)
+
+#stocks <- rbind(nasdaq, nyse)
+#names(stocks)[8] <- "Summary Quote"
+#stocks <- stocks[1:8]
+#amex <- amex[1:8]
+
+#stocks <- rbind(stocks, amex)
+#stocks <- stocks$Symbol
+#stocks <- sort(stocks)
+#stocks <- as.data.frame(stocks)
+#stocks$stocks <- gsub("\\..*","",stocks$stocks)
+#stocks <- unique(stocks$stocks)
+#stock_list <- as.list(stocks)
+
+#1 Month Profit Range####
+#stock_remover <- function(stock_sign){
    
-   financhill <- function(stock_sign) {
-      
-      financhill_url <- paste0("https://financhill.com/stock-forecast/", stock_sign, "-stock-prediction")
-      url <- read_html(financhill_url)
-      
-      words <- url %>%
-         html_nodes("h4") %>%
-         html_text() %>%
-         as.data.frame()
-      
-      rec <- words[c(7),]
-      rec <- as.character(rec)
-      rec <- unlist(strsplit(rec, split = " ", fixed = TRUE))
-      rec <- tail(rec, n=1)
-      print("Financhill Recommendation")
-      rec <- ifelse(rec=="tools:", print("No Data"), print(rec))
-      
-   }
+   # current price
+   yahoo_url <- paste0("https://finance.yahoo.com/quote/", stock_sign, "?p=", stock_sign)
+   
+   # current price
+   current <- read_html(yahoo_url)
+   
+   current <- current %>%
+      html_nodes("span") %>%
+      html_text() %>%
+      as.data.frame()
+   
+   current <- current[!apply(is.na(current) | current == "", 1, all),]
+   current <- as.data.frame(current)
+   current <- current[grep("[[:digit:]]", current$current), ]
+   current <- as.data.frame(current)
+   current <- current[!grepl("W", current$current),]
+   current <- as.data.frame(current)
+   
+   current1 <- current[11,1]
+   current1 <- gsub(",","",current1)
+   current1 <- as.numeric(current1)
+   
+   not_stock_of_interest <- paste0(stock_sign, ": Remove")
+   
+   punct_test <- grepl('[^[:punct:]]', current1)
+   
+   ifelse(punct_test == FALSE, print(not_stock_of_interest), "")
+   
+#}
+
+
+   
+stock_recs <- function(stock_sign) {
+
+      financhill <- function(stock_sign) {
+         
+         financhill_url <- paste0("https://financhill.com/stock-forecast/", stock_sign, "-stock-prediction")
+         url <- read_html(financhill_url)
+         
+         words <- url %>%
+            html_nodes("h4") %>%
+            html_text() %>%
+            as.data.frame()
+         
+         rec <- words[c(12),]
+         rec <- as.character(rec)
+         rec <- unlist(strsplit(rec, split = " ", fixed = TRUE))
+         rec <- tail(rec, n=1)
+         rec <- as.character(rec)
+         rec <- unlist(strsplit(rec, split = "\t", fixed = TRUE))
+         rec <- rec[1]
+         rec <- unlist(strsplit(rec, split = " ", fixed = TRUE))
+         
+         print("Financhill Recommendation")
+         rec <- ifelse(rec=="Now", print("No Data"), print(rec))
+         
+      }
    
    zacks_stock_price <- function(stock_sign) {
       
@@ -90,13 +149,15 @@ stock_recs <- function(stock_sign) {
          str_squish() %>%
          as.data.frame()
       
-      rec <- stock_data[2,1]
+      stock_data <- stock_data[-which(stock_data$. == ""), ]
+      stock_data <- as.data.frame(stock_data)
+      
+      rec <- stock_data[29,1]
       rec <- sub(" .*", "", rec)
       rec <- as.character(rec)
       rec <- ifelse(is.na(rec), 'No Data', rec)
       
       print("Market Watch")
-      print("Analyst Recommendation")
       print(rec)
       
    }
@@ -273,7 +334,7 @@ stock_recs <- function(stock_sign) {
       #stock_invest(stock_sign)
       #markets_insider(stock_sign) #find way to show analyst recommendation range
       market_beat(stock_sign)
-      bar_chart(stock_sign)
+      #bar_chart(stock_sign)
       yahoo_finance(stock_sign)
       wallet_investor(stock_sign)
       market_watch(stock_sign)
@@ -282,10 +343,20 @@ stock_recs <- function(stock_sign) {
    }
    
    stock_analysis(stock_sign)
+   print(" ")
    
 }
 
-stock_recs("nvr")
+
+stock_recs("amsf")
+
+
+#for ( i in stock_list ){
+   
+   tryCatch(
+      stock_recs(i), error = function(e){})
+   
+#}
 
 # trefis website for price forecasts
 # terminology explanation
