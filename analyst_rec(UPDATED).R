@@ -285,7 +285,7 @@ stock_recs <- function(stock_sign) {
    
 }
 
-stock_recs("ntst")
+stock_recs("nvr")
 
 # trefis website for price forecasts
 # terminology explanation
