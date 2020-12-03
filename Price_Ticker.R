@@ -3,7 +3,12 @@
 # 2) CURRENT PRICE
 
 # Then I can subset stocks based on my prices of interest
+
 # Prices from Yahoo Finance
+library(tidyverse) #general
+library(xml2) #read_html()
+library(rvest) #html_nodes()
+library(htmltab) #htmltab()
 
 #SYMBOLS####
 symbol_list <- function(){
@@ -40,14 +45,6 @@ data <- unique(data)
 
 }
 
-#symbol_list <- symbol_list()
-#symbol_list <- write.csv(symbol_list, file = "symbol_list.csv")
-data <- read.csv(file = "symbol_list.csv")
-
-test_data <- data[1:5,]
-
-#PRICES####
-stock_sign = data$x
 # current price
 url_list <- function(stock_sign){
 yahoo_url <- paste0("https://finance.yahoo.com/quote/", stock_sign, "?p=", stock_sign)
@@ -59,11 +56,6 @@ yahoo_table <- as.data.frame(yahoo_table)
 data <- yahoo_url
 
 }
-
-# list of yahoo urls
-url_data <- url_list(data$x)
-
-#url_data <- as.matrix(url_data)
 
 current_price <- function(stock_sign){
 
@@ -150,20 +142,6 @@ current_price <- function(stock_sign){
    
 }
 
-
-
-stock_sign = "GOOG"
-
-
-
-
-
-
-
-
-
-stock_sign = "GOOG"
-
 stock_prices <- function(stock_sign){
 
 yahoo_url <- paste0("https://finance.yahoo.com/quote/", stock_sign, "?p=", stock_sign)
@@ -182,10 +160,10 @@ current <- current[grep("[[:digit:]]", current$current), ]
 current <- as.data.frame(current)
 current <- current[!grepl("W", current$current),]
 current <- as.data.frame(current)
-current1 <- current[12,1]
+current1 <- current[11,1]
 current1 <- gsub(",","",current1)
 current1 <- suppressWarnings(as.numeric(as.character(current1)))
-current2 <- current[16,1]
+current2 <- current[15,1]
 current2 <- gsub(",","",current2)
 current2 <- suppressWarnings(as.numeric(as.character(current2)))
 current <- ifelse(is.na(current1) == TRUE, current2, current1)
@@ -198,10 +176,10 @@ ifelse(current < 10, print(stock_result), "")
 
 }
 
-for (i in  stock_names){
+for (i in  data()){
    
    tryCatch(
-   stock_prices(i), 
+   current_price(i), 
    error = function(e){})
    
 }
