@@ -233,7 +233,7 @@ only_text <- function(stock_sign, profit_gap_percent, profit_gap_number){
 
 }
 
-only_text("hii", 10, 25)
+#only_text("hii", 10, 25)
 
 #example loop of gains####
 
