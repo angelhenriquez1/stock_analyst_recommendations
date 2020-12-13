@@ -5,24 +5,6 @@ library(htmltab)
 library(rvest)
 library(xml2)
 
-#Stock List####
-#nyse <- read.csv("~/Stock Average Price Projection/nyse.csv", stringsAsFactors=FALSE)
-#amex <- read_csv("Stock Average Price Projection/amex.csv", skip = 1)
-#nasdaq <- read.csv("~/Stock Average Price Projection/nasdaq.csv", stringsAsFactors=FALSE)
-
-#stocks <- rbind(nasdaq, nyse)
-#names(stocks)[8] <- "Summary Quote"
-#stocks <- stocks[1:8]
-#amex <- amex[1:8]
-
-#stocks <- rbind(stocks, amex)
-#stocks <- stocks$Symbol
-#stocks <- sort(stocks)
-#stocks <- as.data.frame(stocks)
-#stocks$stocks <- gsub("\\..*","",stocks$stocks)
-#stocks <- unique(stocks$stocks)
-#stock_list <- as.list(stocks)
-
 #1 Month Profit Range####
 #stock_remover <- function(stock_sign){
    
@@ -56,8 +38,6 @@ library(xml2)
    
 #}
 
-
-   
 stock_recs <- function(stock_sign) {
 
       financhill <- function(stock_sign) {
@@ -353,8 +333,8 @@ stock_recs("amsf")
 
 #for ( i in stock_list ){
    
-   tryCatch(
-      stock_recs(i), error = function(e){})
+#   tryCatch(
+#      stock_recs(i), error = function(e){})
    
 #}
 
