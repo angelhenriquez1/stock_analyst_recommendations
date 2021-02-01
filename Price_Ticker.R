@@ -47,6 +47,7 @@ data <- unique(data)
 
 # current price
 url_list <- function(stock_sign){
+
 yahoo_url <- paste0("https://finance.yahoo.com/quote/", stock_sign, "?p=", stock_sign)
 #view(yahoo_url)
 yahoo_table <- as.data.frame(yahoo_url)
