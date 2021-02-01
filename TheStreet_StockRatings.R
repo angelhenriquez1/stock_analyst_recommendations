@@ -5,7 +5,6 @@
 
 # https://www.thestreet.com/topic/25821/top-rated-equity-airlines.html
 
-library(xml2) #read_html()
 library(tidyverse) #general
 library(xml2) #read_html()
 library(rvest) #html_nodes()
