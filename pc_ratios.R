@@ -37,7 +37,6 @@ data <- function(){
    
 }
 
-stock_sign = "goog"
 pc_ratio <- function(stock_sign){
 
    put_call_ratio <- paste0("https://marketchameleon.com/Overview/", stock_sign, "/OpenInterestTrends/")
@@ -70,9 +69,6 @@ pc_ratio <- function(stock_sign){
    #ifelse(pc_ratio <= 1 & pc_ratio >= 0.75 & interest_level > 100000, print(pc_ratio_neutral), "")
    
 }
-
-
-#pc_ratio("baba")
 
 for (i in data()){
    tryCatch(
