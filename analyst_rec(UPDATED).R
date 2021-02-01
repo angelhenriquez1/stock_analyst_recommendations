@@ -6,7 +6,7 @@ library(rvest)
 library(xml2)
 
 #1 Month Profit Range####
-#stock_remover <- function(stock_sign){
+stock_remover <- function(stock_sign){
    
    # current price
    yahoo_url <- paste0("https://finance.yahoo.com/quote/", stock_sign, "?p=", stock_sign)
@@ -36,7 +36,7 @@ library(xml2)
    
    ifelse(punct_test == FALSE, print(not_stock_of_interest), "")
    
-#}
+}
 
 stock_recs <- function(stock_sign) {
 
@@ -328,7 +328,7 @@ stock_recs <- function(stock_sign) {
 }
 
 
-stock_recs("amsf")
+stock_recs("o")
 
 
 #for ( i in stock_list ){
