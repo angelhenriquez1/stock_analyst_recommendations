@@ -1,4 +1,4 @@
-rm(list = ls())
+rm(list = ls()) 
 
 #Prelixminaries####
 setwd("~/Stock Average Price Projection")

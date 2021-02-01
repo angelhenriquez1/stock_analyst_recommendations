@@ -1,5 +1,4 @@
 # pulling out data of top rated stocks from thestreet website
-
 # https://www.thestreet.com/stock-market-news/10579592/top-rated-stocks/top-rated-stocks.html
 
 

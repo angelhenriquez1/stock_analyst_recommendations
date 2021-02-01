@@ -1,5 +1,5 @@
 # 1 month stock volatility
-rm(list = ls())
+rm(list = ls()) 
 
 setwd("~/Stock Average Price Projection")
 
