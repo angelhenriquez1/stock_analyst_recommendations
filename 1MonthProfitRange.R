@@ -1,4 +1,4 @@
-# 1 month stock volatility
+# 1 month stock volatility 
 rm(list = ls())
 # list of stock symbols
 
