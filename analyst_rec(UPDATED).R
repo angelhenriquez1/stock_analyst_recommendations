@@ -328,7 +328,7 @@ stock_recs <- function(stock_sign) {
 }
 
 
-stock_recs("o")
+stock_recs("ehth")
 
 
 #for ( i in stock_list ){
