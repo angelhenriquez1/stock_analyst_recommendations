@@ -5,41 +5,10 @@ library(htmltab)
 library(rvest)
 library(xml2)
 
-#1 Month Profit Range####
-stock_remover <- function(stock_sign){
-   
-   # current price
-   yahoo_url <- paste0("https://finance.yahoo.com/quote/", stock_sign, "?p=", stock_sign)
-   
-   # current price
-   current <- read_html(yahoo_url)
-   
-   current <- current %>%
-      html_nodes("span") %>%
-      html_text() %>%
-      as.data.frame()
-   
-   current <- current[!apply(is.na(current) | current == "", 1, all),]
-   current <- as.data.frame(current)
-   current <- current[grep("[[:digit:]]", current$current), ]
-   current <- as.data.frame(current)
-   current <- current[!grepl("W", current$current),]
-   current <- as.data.frame(current)
-   
-   current1 <- current[11,1]
-   current1 <- gsub(",","",current1)
-   current1 <- as.numeric(current1)
-   
-   not_stock_of_interest <- paste0(stock_sign, ": Remove")
-   
-   punct_test <- grepl('[^[:punct:]]', current1)
-   
-   ifelse(punct_test == FALSE, print(not_stock_of_interest), "")
-   
-}
-
+# Finding stock recommendations
 stock_recs <- function(stock_sign) {
 
+      # Recommendations from Financhill
       financhill <- function(stock_sign) {
          
          financhill_url <- paste0("https://financhill.com/stock-forecast/", stock_sign, "-stock-prediction")
@@ -64,6 +33,7 @@ stock_recs <- function(stock_sign) {
          
       }
    
+   # Recommendations from Zacks Investment Research
    zacks_stock_price <- function(stock_sign) {
       
       stock_sign <- as.character(stock_sign)
@@ -83,6 +53,7 @@ stock_recs <- function(stock_sign) {
       
    }
    
+   # Recommendations from Finviz
    finviz_stock_price <- function(stock_sign) {
       
       stock_sign <- as.character(stock_sign)
@@ -97,6 +68,7 @@ stock_recs <- function(stock_sign) {
       
    }
    
+   # Recommendations from Stock Invest
    stock_invest <- function(stock_sign){
       
       url <- paste0("https://stockinvest.us/technical-analysis/", stock_sign)
@@ -118,6 +90,7 @@ stock_recs <- function(stock_sign) {
       
    }
    
+   # Recommendations from Market Watch
    market_watch <- function(stock_sign) {
       
       url <- paste0("https://www.marketwatch.com/investing/stock/", stock_sign, "/analystestimates")
@@ -142,6 +115,7 @@ stock_recs <- function(stock_sign) {
       
    }
    
+   # Recommendations from Markets Insider
    markets_insider <- function(stock_sign){
       
       url <- paste0("https://markets.businessinsider.com/analyst/", stock_sign, "/all")
@@ -166,6 +140,7 @@ stock_recs <- function(stock_sign) {
       
    }
    
+   # Recommendations from Bar Chart
    bar_chart <- function(stock_sign){
       
       url <-  paste0("https://www.barchart.com/stocks/quotes/", stock_sign)
@@ -221,6 +196,7 @@ stock_recs <- function(stock_sign) {
       
    }
    
+   # Recommendations from Market Beat
    market_beat <- function(stock_sign){
       url <- paste0("https://www.marketbeat.com/stocks/NYSE/", stock_sign, "/price-target/")
       url <- read_html(url)
@@ -237,6 +213,7 @@ stock_recs <- function(stock_sign) {
       print(rec)
    }
    
+   # Recommendations from Wallet Investor
    wallet_investor <- function(stock_sign){
       
       url <- paste0("https://walletinvestor.com/stock-forecast/", stock_sign, "-stock-prediction")
@@ -256,6 +233,7 @@ stock_recs <- function(stock_sign) {
       
    }
    
+   # Recommendations from Yahoo Finance
    yahoo_finance <- function(stock_sign){
       
       yahoo_url <- paste0("https://finance.yahoo.com/quote/", stock_sign, "?p=", stock_sign)
@@ -287,6 +265,7 @@ stock_recs <- function(stock_sign) {
       
    }
    
+   # Recommendations from CNN Money
    cnn_money <- function(stock_sign) {
       
       cnn_url <- paste0("https://money.cnn.com/quote/forecast/forecast.html?symb=", stock_sign)
@@ -305,14 +284,15 @@ stock_recs <- function(stock_sign) {
       
    }
    
+   # List of all recommendations
    stock_analysis <- function(stock_sign){
       
       print(stock_sign)
       financhill(stock_sign)
-      #zacks_stock_price(stock_sign) # blocked by wifi
+      #zacks_stock_price(stock_sign)
       #finviz_stock_price(stock_sign)
       #stock_invest(stock_sign)
-      #markets_insider(stock_sign) #find way to show analyst recommendation range
+      #markets_insider(stock_sign)
       market_beat(stock_sign)
       #bar_chart(stock_sign)
       yahoo_finance(stock_sign)
@@ -327,16 +307,5 @@ stock_recs <- function(stock_sign) {
    
 }
 
-
-stock_recs("ehth")
-
-
-#for ( i in stock_list ){
-   
-#   tryCatch(
-#      stock_recs(i), error = function(e){})
-   
-#}
-
-# trefis website for price forecasts
-# terminology explanation
+# Example: Alphabet Stock
+stock_recs("goog")
