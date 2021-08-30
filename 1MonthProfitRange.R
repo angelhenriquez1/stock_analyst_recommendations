@@ -96,12 +96,12 @@ month_profit_range <- function(stock_sign){
    profit_diff_perc = round(profit_diff_perc, digits=2)
    
    results = paste0(stock_sign," | Current Price: ", current, " | Profit ($) = $", profit_diff_num, " | Profit (%) = ", profit_diff_perc, "%")
-   # Stocks with both greater than 80% and $10 profit potential
    ifelse(profit_diff_num > 10 & profit_diff_perc > 85, print(results), "")
    
 }
 
-# Loop for 1000+ stock tickers 
+# Isolating stocks with both >80% and $10 profit range potential for 1000+ stock tickers
+
 for ( i in stocks$stocks ){
 tryCatch( month_profit_range(i), error = function(e){print})
 }
