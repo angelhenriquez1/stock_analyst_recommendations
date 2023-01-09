@@ -343,93 +343,10 @@ stockRec8$YahooFinance <- gsub("EstReturn","",stockRec8$YahooFinance)
 stocksWithData <- subset(stockRec8, stockRec8$YahooFinance != stockRec8$`Stock Sign`)
 unique_stock_recommendation_types <- as.data.frame(unique(stocksWithData$YahooFinance))
 
+#Subset of final buy stocks
 Yahoo_Finance_buy_stocks <- subset(stockRec8$`Stock Sign`, 
                                    stockRec8$YahooFinance != "NearFairValue" &
                                    stockRec8$YahooFinance != "Overvalued")
 
-final_stock_list_without_price_range <- as.data.frame(Yahoo_Finance_buy_stocks)
-
-# finding all stock data for best rated stocks
-colnames(stockRec8)[2] ="Symbol"
-all_good_rating_stock_data <- right_join(x = all_stock_data, y = final_stock_list_without_price_range, by = c("Symbol" = "Yahoo_Finance_buy_stocks"))
-
-# Creating list at beginning of code (Run 9 time)
-stockRec9 <- data.frame(matrix(ncol = 2, nrow = 1))
-colnames(stockRec9) <- c('Profitability', 'Stock Sign')
-
-for (stock_sign in final_stock_list_without_price_range$Yahoo_Finance_buy_stocks) {
-   
-   BarChartURL <- paste0("https://www.barchart.com/stocks/quotes/", stock_sign, "/overview")
-   # barchart data
-   data <- suppressWarnings(htmltab(doc = BarChartURL, which = 1))
-   # 52 week high
-   high <- suppressWarnings(as.numeric(as.character(str_replace_all(gsub("\\-.*","", data[3,3]), ",", ""))))
-   # 52 week low
-   low <- suppressWarnings(as.numeric(as.character(str_replace_all(gsub("\\+.*","", data[3,2]), ",", ""))))
-   # current price
-   current <- read_html(paste0("https://finance.yahoo.com/quote/", stock_sign, "?p=", stock_sign)) %>%
-      html_nodes("div fin-streamer") %>%
-      html_text()
-   
-   current <- as.numeric(current[13])
-   
-   profitability <- round((high-current)/(high-low)*100,2)
-   
-   # Combining data into row
-   stock_ranking9 <- data.frame(matrix(c(profitability, stock_sign), ncol = 2, nrow = 1))
-   
-   # matching column names for rbind function to work
-   names(stock_ranking9) <- names(stockRec9)
-   
-   # Adding row of stock data
-   stockRec9 <- rbind(stockRec9, stock_ranking9)
-   
- }
-
-stockRec9$Profitability <- as.numeric(stockRec9$Profitability)
-
-# Gender, Age Comparison
-my_summary <- all_good_rating_stock_data %>%
-   count(Sector, sort = TRUE) 
-
-# pie chart: https://r-graph-gallery.com/piechart-ggplot2.html
-# Gender and Number of Students
-num_of_students <- Course_Evaluation_Responses %>%
-   count(Sex, sort = TRUE) 
-
-ggplot(all_good_rating_stock_data, aes(x="", y=Sector, fill=Sector)) +
-   geom_bar(stat="identity", width=1) +
-   coord_polar("y", start=0) +
-   theme_void() +
-   theme(legend.position="left") +
-   scale_fill_brewer(palette="Set1")
-
-# finding all stock data for best rated stocks
-
-write.csv2(final_stock_list_without_price_range, "Dec11BuyStocks.csv")
-
-# final_stocks = as.data.frame(Yahoo_Finance_buy_stocks1$`Stock Sign`)
-
-all_good_rating_stock_data <- all_good_rating_stock_data[order(all_good_rating_stock_data$Sector),]
-
-all_good_rating_stock_data_sector_data <- all_good_rating_stock_data %>%
-                                          select(Industry, Symbol, Country, Sector)
-
-#Graphing####
-ggplot(data = all_good_rating_stock_data, aes(x=frequency(Sector), y=Sector, color=Sector)) +
-   scale_fill_brewer(palette="Set1") +
-   labs(title="Buy Stocks Sectors", y = "Stock Sector", x = "Frequency" ) + 
-   geom_bar(stat="identity")
-
-ggplot(data = all_good_rating_stock_data, aes(x=frequency(Industry), y=Industry, color=Industry)) +
-   scale_fill_brewer(palette="Set1") +
-   labs(title="Buy Stocks Industry", y = "Stock Industry", x = "Frequency" ) + 
-   geom_bar(stat="identity")
-
-
-top_sectors <- subset(all_good_rating_stock_data, 
-                      (all_good_rating_stock_data$Sector == "Industrials" |
-                      all_good_rating_stock_data$Sector == "Finance") &
-                      (all_good_rating_stock_data$IPO.Year != "2021" &
-                      all_good_rating_stock_data$IPO.Year != "2022"))
-
+#Data frame of final buy stocks
+final_stock_list<- as.data.frame(Yahoo_Finance_buy_stocks)
