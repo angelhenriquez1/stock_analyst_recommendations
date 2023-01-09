@@ -2,7 +2,6 @@
 
 # Package libraries
 library(tidyverse)
-#library(htmltab)
 library(rvest)
 library(xml2)
 library(data.table)
@@ -13,7 +12,6 @@ library(data.table)
 rm(list = ls())
 # Setting working directory with nyse, amex, and nasdaq
 setwd("~/Stock Average Price Projection")
-
 
 #Retrieving Stock Data From CSV####
 
