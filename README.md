@@ -1,6 +1,6 @@
 # Stock Analyst Recommendations
 
-The goal of this project is to check stock analyst recommendations (bullish, bearish, or somewhere in between) from 12 websites. 
+The goal of this project is to check stock analyst recommendations (bullish, bearish, or somewhere in between) from 10+ websites. 
 
 Through the use of R, I pulled the stock recommendation of public HTML data and display it through the stock_recs() function. 
 
